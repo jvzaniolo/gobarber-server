@@ -3,6 +3,8 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '../config/auth';
 
+import AppError from '../errors/AppError';
+
 import User from '../models/User';
 
 interface Request {
@@ -24,13 +26,13 @@ class AuthenticateUserService {
     });
 
     if (!user) {
-      throw new Error('Given email is not valid.');
+      throw new AppError('Given email is not valid.', 401);
     }
 
     const hasPassword = await compare(password, user.password);
 
     if (!hasPassword) {
-      throw new Error('Given password is not valid.');
+      throw new AppError('Given password is not valid.', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

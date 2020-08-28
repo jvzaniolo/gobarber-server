@@ -1,6 +1,8 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 
+import AppError from '../errors/AppError';
+
 import Appointment from '../models/Appointment';
 import AppointmentsRepo from '../repositories/AppointmentsRepo';
 
@@ -23,7 +25,7 @@ class CreateAppointmentService {
 
     // se achar algum agendamento com o mesmo horário, retorna erro
     if (findAppointmentWithSameDate) {
-      throw Error('This hour is already booked');
+      throw new AppError('This hour is already booked');
     }
 
     // se não, cria um apontamento
