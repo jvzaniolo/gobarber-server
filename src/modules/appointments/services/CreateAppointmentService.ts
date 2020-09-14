@@ -1,25 +1,26 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
 
 import AppError from '@shared/errors/AppError';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
-import AppointmentsRepo from '../repositories/AppointmentsRepo';
 
-interface Request {
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+
+interface IRequest {
   provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
-  public async execute({ provider_id, date }: Request): Promise<Appointment> {
-    const appointmentsRepo = getCustomRepository(AppointmentsRepo);
+  // eslint-disable-next-line prettier/prettier
+  constructor(private appointmentsRepo: IAppointmentsRepository) { }
 
+  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     // startOfHour zera todos os minutos e segundos dentro de uma hora.
     // a hora do agendamento deve ser inteira (Ex.: 16:00)
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentWithSameDate = await appointmentsRepo.findByDate(
+    const findAppointmentWithSameDate = await this.appointmentsRepo.findByDate(
       appointmentDate,
     );
 
@@ -29,13 +30,10 @@ class CreateAppointmentService {
     }
 
     // se não, cria um apontamento
-    const appointment = appointmentsRepo.create({
+    const appointment = await this.appointmentsRepo.create({
       provider_id,
       date: appointmentDate,
     });
-
-    // salva no banco um novo appointment
-    await appointmentsRepo.save(appointment);
 
     return appointment;
   }

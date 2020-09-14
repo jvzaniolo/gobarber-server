@@ -1,22 +1,24 @@
 import fs from 'fs';
 import path from 'path';
-import { getRepository } from 'typeorm';
 
 import AppError from '@shared/errors/AppError';
 
 import uploadConfig from '@config/upload';
-import User from '../infra/typeorm/entities/User';
 
-interface Request {
+import User from '../infra/typeorm/entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
+
+interface IRequest {
   user_id: string;
   avatarFilename: string;
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-    const usersRepo = getRepository(User);
+  // eslint-disable-next-line prettier/prettier
+  constructor(private usersRepo: IUsersRepository) { }
 
-    const user = await usersRepo.findOne(user_id);
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+    const user = await this.usersRepo.findById(user_id);
 
     if (!user) {
       throw new AppError('User is not authenticated.', 401);
@@ -33,7 +35,7 @@ class UpdateUserAvatarService {
 
     user.avatar = avatarFilename;
 
-    await usersRepo.save(user);
+    await this.usersRepo.save(user);
 
     return user;
   }
