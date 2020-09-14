@@ -1,5 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { injectable, inject } from 'tsyringe';
+
 import authConfig from '@config/auth';
 
 import AppError from '@shared/errors/AppError';
@@ -17,9 +20,12 @@ interface IResponse {
   token: string;
 }
 
+@injectable()
 class AuthenticateUserService {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private usersRepo: IUsersRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepo: IUsersRepository,
+  ) { }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepo.findByEmail(email);

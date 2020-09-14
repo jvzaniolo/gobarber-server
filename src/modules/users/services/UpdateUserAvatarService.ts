@@ -1,5 +1,8 @@
+/* eslint-disable prettier/prettier */
 import fs from 'fs';
 import path from 'path';
+
+import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -13,9 +16,12 @@ interface IRequest {
   avatarFilename: string;
 }
 
+@injectable()
 class UpdateUserAvatarService {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private usersRepo: IUsersRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepo: IUsersRepository,
+  ) { }
 
   public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
     const user = await this.usersRepo.findById(user_id);

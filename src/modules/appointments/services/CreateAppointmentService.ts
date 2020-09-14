@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { startOfHour } from 'date-fns';
+import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -11,9 +13,12 @@ interface IRequest {
   date: Date;
 }
 
+@injectable()
 class CreateAppointmentService {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private appointmentsRepo: IAppointmentsRepository) { }
+  constructor(
+    @inject('AppointmentsRepository')
+    private appointmentsRepo: IAppointmentsRepository,
+  ) { }
 
   public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     // startOfHour zera todos os minutos e segundos dentro de uma hora.

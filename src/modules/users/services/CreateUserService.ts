@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { hash } from 'bcryptjs';
+import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -11,9 +13,12 @@ interface IRequest {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private usersRepo: IUsersRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepo: IUsersRepository,
+  ) { }
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const hasUser = await this.usersRepo.findByEmail(email);
