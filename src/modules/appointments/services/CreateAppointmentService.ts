@@ -18,7 +18,7 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepo: IAppointmentsRepository,
-  ) { }
+  ) {}
 
   public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     // startOfHour zera todos os minutos e segundos dentro de uma hora.
