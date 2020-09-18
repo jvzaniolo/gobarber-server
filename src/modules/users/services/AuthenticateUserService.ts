@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
@@ -7,6 +6,7 @@ import authConfig from '@config/auth';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 import User from '../infra/typeorm/entities/User';
 
@@ -25,6 +25,9 @@ class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepo: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) { }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -34,7 +37,7 @@ class AuthenticateUserService {
       throw new AppError('Given email is not valid.', 401);
     }
 
-    const hasPassword = await compare(password, user.password);
+    const hasPassword = await this.hashProvider.compareHash(password, user.password);
 
     if (!hasPassword) {
       throw new AppError('Given password is not valid.', 401);
