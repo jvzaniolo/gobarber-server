@@ -1,12 +1,12 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUsersRespository from '../repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 
 describe('CreateUser', () => {
   it('should be able to create a new user', async () => {
-    const fakeUsersRepository = new FakeUsersRespository();
+    const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
     const createUser = new CreateUserService(
       fakeUsersRepository,
@@ -22,8 +22,8 @@ describe('CreateUser', () => {
     expect(user).toHaveProperty('id');
   });
 
-  it('should not be able to create a new user with existing email', async () => {
-    const fakeUsersRepository = new FakeUsersRespository();
+  it('should NOT be able to create a new user with existing email', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
     const createUser = new CreateUserService(
       fakeUsersRepository,

@@ -1,13 +1,13 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeUsersRespository from '../repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
 
 describe('AuthenticateUser', () => {
   it('should be able to authenticate', async () => {
-    const fakeUsersRepository = new FakeUsersRespository();
+    const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
 
     const createUser = new CreateUserService(
@@ -34,8 +34,8 @@ describe('AuthenticateUser', () => {
     expect(response.user).toEqual(user);
   });
 
-  it('should not be able to authenticate a non existing user', async () => {
-    const fakeUsersRepository = new FakeUsersRespository();
+  it('should NOT be able to authenticate a non existing user', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
 
     const authenticateUser = new AuthenticateUserService(
@@ -51,8 +51,8 @@ describe('AuthenticateUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to authenticate with wrong password', async () => {
-    const fakeUsersRepository = new FakeUsersRespository();
+  it('should NOT be able to authenticate with wrong password', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
 
     const createUser = new CreateUserService(
