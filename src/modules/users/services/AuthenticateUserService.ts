@@ -24,20 +24,23 @@ interface IResponse {
 class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepo: IUsersRepository,
+    private usersRepository: IUsersRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepo.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError('Given email is not valid.', 401);
     }
 
-    const hasPassword = await this.hashProvider.compareHash(password, user.password);
+    const hasPassword = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
 
     if (!hasPassword) {
       throw new AppError('Given password is not valid.', 401);

@@ -17,14 +17,14 @@ interface IRequest {
 class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
-    private usersRepo: IUsersRepository,
+    private usersRepository: IUsersRepository,
 
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
   ) {}
 
   public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
-    const user = await this.usersRepo.findById(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User is not authenticated.', 401);
@@ -38,7 +38,7 @@ class UpdateUserAvatarService {
 
     user.avatar = fileName;
 
-    await this.usersRepo.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

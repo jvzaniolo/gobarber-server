@@ -17,14 +17,14 @@ interface IRequest {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepo: IUsersRepository,
+    private usersRepository: IUsersRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
-    const hasUser = await this.usersRepo.findByEmail(email);
+    const hasUser = await this.usersRepository.findByEmail(email);
 
     if (hasUser) {
       throw new AppError('Email address already used.');
@@ -32,7 +32,7 @@ class CreateUserService {
 
     const hashPassword = await this.hashProvider.generateHash(password);
 
-    const user = this.usersRepo.create({
+    const user = this.usersRepository.create({
       name,
       email,
       password: hashPassword,
