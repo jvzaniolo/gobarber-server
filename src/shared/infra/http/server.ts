@@ -16,10 +16,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
 
-app.use((err: Error, __: Request, response: Response, _: NextFunction) => {
+app.use((err: Error, _: Request, response: Response, __: NextFunction) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',
