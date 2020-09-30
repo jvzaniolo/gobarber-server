@@ -17,7 +17,7 @@ interface IRequest {
 class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
-    private appointmentsRepo: IAppointmentsRepository,
+    private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
@@ -25,7 +25,7 @@ class CreateAppointmentService {
     // a hora do agendamento deve ser inteira (Ex.: 16:00)
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentWithSameDate = await this.appointmentsRepo.findByDate(
+    const findAppointmentWithSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -35,7 +35,7 @@ class CreateAppointmentService {
     }
 
     // se não, cria um apontamento
-    const appointment = await this.appointmentsRepo.create({
+    const appointment = await this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });

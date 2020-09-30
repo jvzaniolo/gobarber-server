@@ -3,8 +3,8 @@
 **RF**
 
 * [x] O usuário deve poder recuperar sua senha informando um email
-* [ ] O usuário deve receber um email com instruções de recuperação de senha
-* [ ] O usuário deve poder alterar sua senha
+* [x] O usuário deve receber um email com instruções de recuperação de senha
+* [x] O usuário deve poder alterar sua senha
 
 **RNF**
 
@@ -22,7 +22,7 @@
 
 **RF**
 
-* [ ] O usuário deve poder atualizar seu nome, email e senha
+* [x] O usuário deve poder atualizar seu nome, email e senha
 
 **RN**
 
@@ -52,7 +52,7 @@
 
 **RF**
 
-* [ ] O usuário deve poder listar todos os barbeiros cadastrados
+* [x] O usuário deve poder listar todos os barbeiros cadastrados
 * [ ] O usuário deve poder listar os dias disponíveis de um funcionário específico
 * [ ] O usuário deve poder listar os horários disponíveis de um funcionário específico
 * [ ] O usuário deve poder agendar um horário com um barbeiro
