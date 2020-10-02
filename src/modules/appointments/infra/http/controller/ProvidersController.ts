@@ -13,7 +13,7 @@ class ProvidersController {
       user_id,
     });
 
-    return response.status(201).json(providers);
+    return response.status(200).json(providers);
   }
 }
 
