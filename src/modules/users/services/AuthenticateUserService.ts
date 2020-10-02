@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
