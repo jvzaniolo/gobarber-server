@@ -53,7 +53,7 @@
 **RF**
 
 * [x] O usuário deve poder listar todos os barbeiros cadastrados
-* [ ] O usuário deve poder listar os dias disponíveis de um funcionário específico
+* [x] O usuário deve poder listar os dias disponíveis de um funcionário específico
 * [ ] O usuário deve poder listar os horários disponíveis de um funcionário específico
 * [ ] O usuário deve poder agendar um horário com um barbeiro
 
